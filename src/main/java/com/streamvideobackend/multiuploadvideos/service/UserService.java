@@ -132,7 +132,10 @@ public class UserService {
 	
 	
 	public List<User> getAllUsers() {
-        return userRepository.findAll();
+         List<User> users = userRepository.findAll();
+    // Hide password
+          users.forEach(user -> user.setPassword(null));
+          return users;
     }
 
 	// Delete profile picture
