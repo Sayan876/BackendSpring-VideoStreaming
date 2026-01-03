@@ -55,20 +55,34 @@ public class UserController {
         }
     }
 
-    // Update user data (name, password, biodetails, country)
+    // Update user data (name, biodetails, country)
+    
     @PatchMapping("/user/{id}/details")
     public ResponseEntity<User> updateUserDetails(@PathVariable int id,
                                                   @RequestParam String name,
-                                                  @RequestParam String password,
+                                                  
                                                   @RequestParam String biodetails,
                                                   @RequestParam String country) {
         try {
-            User user = userService.updateDataUser(id, name, password, biodetails, country);
+            User user = userService.updateDataUser(id, name, biodetails, country);
             return ResponseEntity.ok(user);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
    }
+    
+    
+    //changing the password 
+    @PatchMapping("/user/{id}/updatePassword")
+    public ResponseEntity<User> userPasswordChange(@PathVariable int id, @RequestParam String password){
+          try {
+			User  user = userService.updateUserPassword(password, id);
+			  return ResponseEntity.ok(user);
+		  } catch (Exception e) {
+			// TODO Auto-generated catch block
+			return ResponseEntity.badRequest().build();
+		  }
+    }
 
      //Get all users
     @GetMapping("/users")
