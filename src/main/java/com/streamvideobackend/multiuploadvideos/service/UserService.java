@@ -99,8 +99,9 @@ public class UserService {
 			throw new RuntimeException("Failed to update profile image for user ID: " + userId, e);
 		}
 	}
-	
-	public User updateDataUser(int id, String name, String password, String biodetials, String country) {
+
+	//Update user details 
+	public User updateDataUser(int id, String name, String biodetials, String country) {
 		Optional<User> optionalUser = userRepository.findById(id);
 		if (optionalUser.isEmpty()) {
 			throw new RuntimeException("User not found with ID: " + id);
@@ -109,7 +110,7 @@ public class UserService {
 		User user = optionalUser.get();
 		try {
 			user.setName(name);
-			user.setPassword(password);
+			
 			user.setBiodetails(biodetials);
 			user.setCountry(country);
 		} catch (Exception e) {
@@ -119,6 +120,24 @@ public class UserService {
 
 		return userRepository.save(user);
 
+	}
+
+
+	//Change password 
+	public User updateUserPassword(String password, int id) {
+		Optional<User> optionalUser = userRepository.findById(id);
+		if(optionalUser.isEmpty()) {
+			throw new RuntimeException("User not found with ID:" + id);
+		}
+		User user = optionalUser.get();
+		try {
+			user.setPassword(password);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return userRepository.save(user);
 	}
 	
 	public User getUserById(int id) {
